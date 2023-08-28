@@ -1,0 +1,20 @@
+# IPsec app layer event rules
+#
+# SID's fall in the 2224000+ range. See https://redmine.openinfosecfoundation.org/projects/suricata/wiki/AppLayer
+#
+# These sigs fire at most once per connection.
+#
+alert ike any any -> any any (msg:"SURICATA IKE malformed request data"; flow:to_server; app-layer-event:ike.malformed_data; classtype:protocol-command-decode; sid:2000098; rev:2;)
+alert ike any any -> any any (msg:"SURICATA IKE malformed response data"; flow:to_client; app-layer-event:ike.malformed_data; classtype:protocol-command-decode; sid:2000099; rev:2;)
+alert ike any any -> any any (msg:"SURICATA IKE weak cryptographic parameters (Encryption)"; flow:to_client; app-layer-event:ike.weak_crypto_enc; classtype:protocol-command-decode; sid:2000100; rev:2;)
+alert ike any any -> any any (msg:"SURICATA IKE weak cryptographic parameters (PRF)"; flow:to_client; app-layer-event:ike.weak_crypto_prf; classtype:protocol-command-decode; sid:2000101; rev:2;)
+alert ike any any -> any any (msg:"SURICATA IKE weak cryptographic parameters (Auth)"; flow:to_client; app-layer-event:ike.weak_crypto_auth; classtype:protocol-command-decode; sid:2000102; rev:3;)
+alert ike any any -> any any (msg:"SURICATA IKE weak cryptographic parameters (Diffie-Hellman)"; flow:to_client; app-layer-event:ike.weak_crypto_dh; classtype:protocol-command-decode; sid:2000103; rev:3;)
+alert ike any any -> any any (msg:"SURICATA IKE no Diffie-Hellman exchange parameters"; flow:to_client; app-layer-event:ike.weak_crypto_nodh; classtype:protocol-command-decode; sid:2000104; rev:2;)
+alert ike any any -> any any (msg:"SURICATA IKE no authentication"; flow:to_client; app-layer-event:ike.weak_crypto_noauth; classtype:protocol-command-decode; sid:2000223; rev:2;)
+alert ike any any -> any any (msg:"SURICATA IKE no encryption (AH)"; flow:to_client; app-layer-event:ike.no_encryption; classtype:protocol-command-decode; sid:2000224; rev:2;)
+alert ike any any -> any any (msg:"SURICATA IKE invalid proposal"; flow:to_server; app-layer-event:ike.invalid_proposal; classtype:protocol-command-decode; sid:2000107; rev:2;)
+alert ike any any -> any any (msg:"SURICATA IKE invalid proposal selected"; flow:to_client; app-layer-event:ike.invalid_proposal; classtype:protocol-command-decode; sid:2000108; rev:2;)
+alert ike any any -> any any (msg:"SURICATA IKE unknown proposal"; flow:to_server; app-layer-event:ike.unknown_proposal; classtype:protocol-command-decode; sid:2000109; rev:2;)
+alert ike any any -> any any (msg:"SURICATA IKE unknown proposal selected"; flow:to_client; app-layer-event:ike.unknown_proposal; classtype:protocol-command-decode; sid:2000110; rev:2;)
+alert ike any any -> any any (msg:"SURICATA IKE multiple server proposal"; flow:to_client; app-layer-event:ike.multiple_server_proposal; classtype:protocol-command-decode; sid:2000111; rev:1;)
